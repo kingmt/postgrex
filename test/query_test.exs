@@ -123,6 +123,21 @@ defmodule QueryTest do
     assert [[%Postgrex.Point{x: -97.0, y: 100.0}]] == query("SELECT $1::point", [%Postgrex.Point{x: -97, y: 100}])
   end
 
+  test "decode box", context do
+    assert [[%Postgrex.Box{a: %Postgrex.Point{x: 12, y: 100.1}, b: %Postgrex.Point{x: -97.5, y: 13}}]] ==
+      query("SELECT '12.0, 100.1, -97.5, 13.0'::box", [])
+  end
+
+  test "encode box with top right and bottom left corners", context do
+    assert [[%Postgrex.Box{a: %Postgrex.Point{x: 22, y: 100.0}, b: %Postgrex.Point{x: -97.0, y: 23}}]] ==
+      query("SELECT $1::box", [%Postgrex.Box{a: %Postgrex.Point{x: -97, y: 100}, b: %Postgrex.Point{x: 22, y: 23}}])
+  end
+
+  test "encode box with top left and bottom right corners", context do
+    assert [[%Postgrex.Box{a: %Postgrex.Point{x: 22, y: 100.0}, b: %Postgrex.Point{x: -97.0, y: 23}}]] ==
+      query("SELECT $1::box", [%Postgrex.Box{a: %Postgrex.Point{x: 22, y: 100}, b: %Postgrex.Point{x: -97, y: 23}}])
+  end
+
   test "decode name", context do
     assert [["test"]] == query("SELECT 'test'::name", [])
   end

@@ -161,3 +161,18 @@ defmodule Postgrex.Point do
     x: nil,
     y: nil]
 end
+
+defmodule Postgrex.Box do
+  @moduledoc """
+  Struct for Postgres box
+
+  ### Fields
+    * `a` => upper right corner defined as a Postgrex.Point
+    * `b` => lower left corner defined as a Postgrex.Point
+  """
+  @type t :: %__MODULE__{a: Postgrex.Point.t, b: Postgrex.Point.t}
+
+  defstruct [
+    a: nil,
+    b: nil]
+end
