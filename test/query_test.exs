@@ -123,6 +123,16 @@ defmodule QueryTest do
     assert [[%Postgrex.Point{x: -97.0, y: 100.0}]] == query("SELECT $1::point", [%Postgrex.Point{x: -97, y: 100}])
   end
 
+  test "decode circle", context do
+    assert [[%Postgrex.Circle{center: %Postgrex.Point{x: -97.5, y: 100.1}, radius: 1.2}]] ==
+      query("SELECT '-97.5, 100.1, 1.2'::circle", [])
+  end
+
+  test "encode circle", context do
+    assert [[%Postgrex.Circle{center: %Postgrex.Point{x: -97.0, y: 100.0}, radius: 1.2}]] ==
+      query("SELECT $1::circle", [%Postgrex.Circle{center: %Postgrex.Point{x: -97, y: 100}, radius: 1.2}])
+  end
+
   test "decode box", context do
     assert [[%Postgrex.Box{a: %Postgrex.Point{x: 12, y: 100.1}, b: %Postgrex.Point{x: -97.5, y: 13}}]] ==
       query("SELECT '12.0, 100.1, -97.5, 13.0'::box", [])

@@ -176,3 +176,18 @@ defmodule Postgrex.Box do
     a: nil,
     b: nil]
 end
+
+defmodule Postgrex.Circle do
+  @moduledoc """
+  Struct for Postgres line.
+
+  ## Fields
+    * `center`
+    * `radius`
+  """
+  @type t :: %__MODULE__{center: Postgrex.Point.t, radius: float}
+
+  defstruct [
+    center: nil,
+    radius: nil]
+end
