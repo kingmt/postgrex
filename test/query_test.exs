@@ -133,6 +133,16 @@ defmodule QueryTest do
       query("SELECT $1::circle", [%Postgrex.Circle{center: %Postgrex.Point{x: -97, y: 100}, radius: 1.2}])
   end
 
+  test "decode lseg", context do
+    assert [[%Postgrex.Lseg{a: %Postgrex.Point{x: -97.5, y: 100.1}, b: %Postgrex.Point{x: 12, y: 13}}]] ==
+      query("SELECT '-97.5, 100.1, 12, 13'::lseg", [])
+  end
+
+  test "encode lseg", context do
+    assert [[%Postgrex.Lseg{a: %Postgrex.Point{x: -97.0, y: 100.0}, b: %Postgrex.Point{x: 22, y: 23}}]] ==
+      query("SELECT $1::lseg", [%Postgrex.Lseg{a: %Postgrex.Point{x: -97, y: 100}, b: %Postgrex.Point{x: 22, y: 23}}])
+  end
+
   test "decode box", context do
     assert [[%Postgrex.Box{a: %Postgrex.Point{x: 12, y: 100.1}, b: %Postgrex.Point{x: -97.5, y: 13}}]] ==
       query("SELECT '12.0, 100.1, -97.5, 13.0'::box", [])

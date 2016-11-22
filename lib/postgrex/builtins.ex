@@ -162,6 +162,23 @@ defmodule Postgrex.Point do
     y: nil]
 end
 
+defmodule Postgrex.Lseg do
+  @moduledoc """
+  Struct for Postgres finite line segment
+
+  ### Fields
+    * `a`
+    * `b`
+
+    where `a` and `b` are Postgrex.Point
+  """
+  @type t :: %__MODULE__{a: Postgrex.Point.t, b: Postgrex.Point.t}
+
+  defstruct [
+    a: nil,
+    b: nil]
+end
+
 defmodule Postgrex.Box do
   @moduledoc """
   Struct for Postgres box
