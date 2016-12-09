@@ -28,21 +28,6 @@ defmodule GeometryQueryTest do
       query("SELECT $1::circle", [%Postgrex.Circle{center: %Postgrex.Point{x: -97, y: 100}, radius: 1.2}])
   end
 
-  test "encode line with only points", context do
-    assert [[%Postgrex.Line{a_point: %Postgrex.Point{x: -97.0, y: 100.0}, b_point: %Postgrex.Point{x: 22, y: 23}}]] ==
-      query("SELECT $1::line", [%Postgrex.Line{a_point: %Postgrex.Point{x: -97, y: 100}, b_point: %Postgrex.Point{x: 22, y: 23}}])
-  end
-
-  test "encode line with a, b, c", context do
-    assert [[%Postgrex.Line{a: -8, b: -1.0, c: 22.4}]] ==
-      query("SELECT $1::line", [%Postgrex.Line{a: -8, b: -1.0, c: 22.4}])
-  end
-
-  test "decode line", context do
-    assert [[%Postgrex.Line{a: -0.7954337899543379, b: -1.0, c: 22.54520547945205}]] ==
-      query("SELECT '-97.5, 100.1, 12, 13'::line", [])
-  end
-
   test "decode lseg", context do
     assert [[%Postgrex.Lseg{a: %Postgrex.Point{x: -97.5, y: 100.1}, b: %Postgrex.Point{x: 12, y: 13}}]] ==
       query("SELECT '-97.5, 100.1, 12, 13'::lseg", [])
