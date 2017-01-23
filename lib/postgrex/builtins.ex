@@ -196,7 +196,7 @@ end
 
 defmodule Postgrex.Circle do
   @moduledoc """
-  Struct for Postgres line.
+  Struct for Postgres circle.
 
   ## Fields
     * `center`
